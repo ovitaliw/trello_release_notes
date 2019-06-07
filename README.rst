@@ -3,11 +3,11 @@ Weekly Trello Notes
 ===================
 
 
-.. image:: https://img.shields.io/pypi/v/weekly_trello_notes.svg
-        :target: https://pypi.python.org/pypi/weekly_trello_notes
+.. image:: https://img.shields.io/pypi/v/trello_release_notes.svg
+        :target: https://pypi.python.org/pypi/trello_release_notes
 
-.. image:: https://img.shields.io/travis/mattkatz/weekly_trello_notes.svg
-        :target: https://travis-ci.org/mattkatz/weekly_trello_notes
+.. image:: https://img.shields.io/travis/mattkatz/trello_release_notes.svg
+        :target: https://travis-ci.org/mattkatz/trello_release_notes
 
 .. image:: https://readthedocs.org/projects/weekly-trello-notes/badge/?version=latest
         :target: https://weekly-trello-notes.readthedocs.io/en/latest/?badge=latest

@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = python -msphinx
-SPHINXPROJ    = weekly_trello_notes
+SPHINXPROJ    = trello_release_notes
 SOURCEDIR     = .
 BUILDDIR      = _build
 

@@ -12,7 +12,7 @@ To install Weekly Trello Notes, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install weekly_trello_notes
+    $ pip install trello_release_notes
 
 This is the preferred method to install Weekly Trello Notes, as it will always install the most recent stable release.
 
@@ -32,13 +32,13 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/mattkatz/weekly_trello_notes
+    $ git clone git://github.com/mattkatz/trello_release_notes
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://github.com/mattkatz/weekly_trello_notes/tarball/master
+    $ curl  -OL https://github.com/mattkatz/trello_release_notes/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/mattkatz/weekly_trello_notes
-.. _tarball: https://github.com/mattkatz/weekly_trello_notes/tarball/master
+.. _Github repo: https://github.com/mattkatz/trello_release_notes
+.. _tarball: https://github.com/mattkatz/trello_release_notes/tarball/master

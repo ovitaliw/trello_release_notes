@@ -51,7 +51,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint: ## check style with flake8
-	flake8 weekly_trello_notes tests
+	flake8 trello_release_notes tests
 
 test: ## run tests quickly with the default Python
 	py.test
@@ -60,15 +60,15 @@ test-all: ## run tests on every Python version with tox
 	tox
 
 coverage: ## check code coverage quickly with the default Python
-	coverage run --source weekly_trello_notes -m pytest
+	coverage run --source trello_release_notes -m pytest
 	coverage report -m
 	coverage html
 	$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	rm -f docs/weekly_trello_notes.rst
+	rm -f docs/trello_release_notes.rst
 	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ weekly_trello_notes
+	sphinx-apidoc -o docs/ trello_release_notes
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	$(BROWSER) docs/_build/html/index.html

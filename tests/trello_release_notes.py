@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for `weekly_trello_notes` package."""
+"""Tests for `trello_release_notes` package."""
 
 import pytest
 
 
-from weekly_trello_notes import weekly_trello_notes
+from trello_release_notes import trello_release_notes
 
 
 @pytest.fixture

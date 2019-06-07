@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=weekly_trello_notes
+set SPHINXPROJ=trello_release_notes
 
 if "%1" == "" goto help
 
