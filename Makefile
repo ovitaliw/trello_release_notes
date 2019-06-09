@@ -59,6 +59,9 @@ test: ## run tests quickly with the default Python
 test-all: ## run tests on every Python version with tox
 	tox
 
+test-mon: ## run tests on every save
+	ag -l | entr -cs "tox -ra"
+
 coverage: ## check code coverage quickly with the default Python
 	coverage run --source trello_release_notes -m pytest
 	coverage report -m
