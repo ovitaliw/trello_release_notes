@@ -2,6 +2,7 @@
 
 """Main module."""
 from trello import TrelloClient
+
 """
 # given a list of boards
 # for each board
@@ -16,3 +17,11 @@ from trello import TrelloClient
 # archive the done item
 # post process - send an email or do something with the release detail
 """
+
+
+class Trellist(object):
+    def __init__(self, apikey, apisecret, board, done, releases):
+        self.board = board
+        self.done = done
+        self.releases = releases
+        self.client = TrelloClient(api_key=apikey, api_secret=apisecret)
