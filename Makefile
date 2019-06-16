@@ -60,7 +60,7 @@ test-all: ## run tests on every Python version with tox
 	tox
 
 test-mon: ## run tests on every save
-	ag -l | entr -cs "tox -ra"
+	ag -l | entr -cs "tox --parallel auto"
 
 coverage: ## check code coverage quickly with the default Python
 	coverage run --source trello_release_notes -m pytest
