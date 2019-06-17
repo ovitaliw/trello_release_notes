@@ -25,3 +25,25 @@ class Trellist(object):
         self.done = done
         self.releases = releases
         self.client = TrelloClient(api_key=apikey, api_secret=apisecret)
+        self.release_template = "{date} release: {count} done"
+        self.create_comment_per_item = True
+
+    def cards_to_data(self, cards):
+        """returns a dict of card data
+
+        :param cards: list of card objects
+        """
+        raise NotImplementedException
+
+    def run(self):
+        #get all cards in the done board
+        cards = self.get_done_cards()
+        description = self.get_description_from_done_cards(cards)
+        release_card = self.create_release_card(self.release_template, cards)
+        for card in cards:
+            if self.create_comment_per_item:
+                self.add_comment_to_release(release_card, card)
+            self.archive_card(card)
+
+    def get_description_from_done_cards(self, cards):
+        raise NotImplementedException
