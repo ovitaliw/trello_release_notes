@@ -33,17 +33,17 @@ class Trellist(object):
 
         :param cards: list of card objects
         """
-        raise NotImplementedException
+        raise NotImplementedError
 
     def run(self):
-        #get all cards in the done board
+        # get all cards in the done board
         cards = self.get_done_cards()
-        description = self.get_description_from_done_cards(cards)
-        release_card = self.create_release_card(self.release_template, cards)
+        description = self.summarize_these(cards)
+        release_card = self.create_release_card(self.release_template, description)
         for card in cards:
             if self.create_comment_per_item:
                 self.add_comment_to_release(release_card, card)
             self.archive_card(card)
 
-    def get_description_from_done_cards(self, cards):
-        raise NotImplementedException
+    def summarize_these(self, cards):
+        raise NotImplementedError
