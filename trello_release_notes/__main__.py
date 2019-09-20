@@ -7,13 +7,34 @@ def main(args):
     raise NotImplementedError
 
 
-if __name__ == "__main__":
+def get_args(arguments):
     parser = ArgumentParser(
         default_config_files=["~/.trello_release_settings.ini"],
         description="A tool to archive what you've done in trello to a release like Alice Goldfuss does",
     )
     parser.add_argument(
-        "-c", "--config", help="A path to a config file for these options"
+        "-c", "--config", is_config_file=True,
+        help="A path to a config file for these options. The default is ~/.trello_release_settings.ini"
     )
-    args = parser.parse_args()
+    parser.add_argument(
+        "--apikey",
+        help="Your apikey for trello. Do not pass on the command line regularly, people can see this in your system.\
+        Best to also store this in the config file.",
+    )
+    parser.add_argument(
+        "--apisecret",
+        help="Your secret token. Do not pass on the command line regularly, people can see this in your system.\
+        Best to also store this in the config file.",
+    )
+    parser.add_argument(
+        "--boardname", help="Name of the board we want to archive from."
+    )
+    parser.add_argument("--done_list", help="Name of the list we want to archive from.")
+    parser.add_argument("--releases", help="Name of the list we want to archive to.")
+    args = parser.parse_args(arguments)
+    return args
+
+
+if __name__ == "__main__":
+    args = get_args()
     main(args)
