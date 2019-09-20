@@ -20,10 +20,10 @@ from trello import TrelloClient
 
 
 class Trellist(object):
-    def __init__(self, apikey, apisecret, board, done, releases):
-        self.board = board
-        self.done = done
-        self.releases = releases
+    def __init__(self, apikey, apisecret, boardname, done_list_name="done", releases_list_name="releases"):
+        self.board = boardname
+        self.done = done_list_name
+        self.releases = releases_list_name
         self.client = TrelloClient(api_key=apikey, api_secret=apisecret)
         self.release_template = "{date} release: {count} done"
         self.create_comment_per_item = True
@@ -38,12 +38,25 @@ class Trellist(object):
     def run(self):
         # get all cards in the done board
         cards = self.get_done_cards()
-        description = self.summarize_these(cards)
-        release_card = self.create_release_card(self.release_template, description)
+        summary = self.summarize_these(cards)
+        release_card = self.create_release_card(self.release_template, summary)
         for card in cards:
             if self.create_comment_per_item:
                 self.add_comment_to_release(release_card, card)
             self.archive_card(card)
 
+    def get_board(self, board_name):
+        remote_boards = self.client.list_boards()
+        for board in remote_boards:
+            if board.closed:
+                continue
+            if board.name == board_name:
+                return board
+        return None
+
+    def get_done_cards(self):
+        raise NotImplementedError
+
+    @classmethod
     def summarize_these(self, cards):
         raise NotImplementedError

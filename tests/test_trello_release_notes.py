@@ -10,16 +10,20 @@ from trello_release_notes import trello_release_notes
 
 
 @pytest.fixture
-def response():
-    """Sample pytest fixture.
+def sample_cards():
+    return [
+        {"description": "card headline 1"},
+        {"description": "card headline 2"},
+        {"description": "card headline 3"},
+        {"description": "card headline 4"},
+        {"description": "card headline 5"},
+        {"description": "card headline 6"},
+    ]
 
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
+
+def test_summarize_these_cards(sample_cards):
+    summary = trello_release_notes.Trellist.summarize_these(sample_cards)
+    assert sample_cards == summary
 
 
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
+
