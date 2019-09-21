@@ -42,3 +42,9 @@ def test_get_board(trellist):
     board = trellist.get_board(boardname)
     assert board is not None
     assert board.name == boardname
+
+def test_get_list_by_name(trellist):
+    l = trellist.get_list_by_name(done_name)
+    assert l.name == done_name
+
+

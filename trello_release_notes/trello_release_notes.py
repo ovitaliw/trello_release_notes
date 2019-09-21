@@ -23,8 +23,8 @@ class Trellist(object):
     def __init__(self, apikey, apisecret, boardname, done_list_name="done", releases_list_name="releases"):
         self.client = TrelloClient(api_key=apikey, api_secret=apisecret)
         self.board = self.get_board(boardname)
-        self.done = done_list_name
-        self.releases = releases_list_name
+        self.done = self.get_list_by_name(done_list_name)
+        self.releases = self.get_list_by_name(releases_list_name)
         self.release_template = "{date} release: {count} done"
         self.create_comment_per_item = True
 
@@ -46,13 +46,29 @@ class Trellist(object):
             self.archive_card(card)
 
     def get_board(self, board_name):
-        remote_boards = self.client.list_boards()
-        for board in remote_boards:
-            if board.closed:
-                continue
-            if board.name == board_name:
-                return board
-        return None
+        """Gets the open board object by a name, otherwise returns None
+
+        :param board_name:
+        """
+        # return next(( b for b in self.client.list_boards() if b.name == board_name and not b.closed), None)
+        return self.first(self.client.list_boards(), lambda b: b.name == board_name and not b.closed)
+
+    def get_list_by_name(self, name):
+        """iterate lists and get the first one matching the name passed in
+
+        :param name:
+        """
+
+        # return next((l for l in self.board.list_lists() if l.name == name), None)
+        return self.first(self.board.list_lists(), lambda l: l.name == name)
+
+    def first(self, iterable, condition):
+        """iterates an iterable and returns the first item that meets a condition or None
+
+        :param iterable:
+        :param condition:
+        """
+        return next((i for i in iterable if condition(i)), None)
 
     def get_done_cards(self):
         raise NotImplementedError
