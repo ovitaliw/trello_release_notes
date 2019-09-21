@@ -8,6 +8,7 @@ import pytest
 
 from trello_release_notes.trello_release_notes import Trellist
 from trello_release_notes.__main__ import get_args
+from collections import namedtuple
 
 args = get_args(["--config", "tests/trello_test_settings.ini"])
 boardname = args.boardname
@@ -17,14 +18,11 @@ releases_name = args.releases
 
 @pytest.fixture
 def sample_cards():
-    return [
-        {"description": "card headline 1"},
-        {"description": "card headline 2"},
-        {"description": "card headline 3"},
-        {"description": "card headline 4"},
-        {"description": "card headline 5"},
-        {"description": "card headline 6"},
-    ]
+    Card = namedtuple("Card", "name description")
+    samples = []
+    for num in range(0,4):
+        samples.append(Card(f"card headline {num}", f"card description {num}"))
+    return samples
 
 # scope at module level to avoid extra get_board calls
 @pytest.fixture(scope="module")
@@ -33,9 +31,13 @@ def trellist():
 
 
 def test_summarize_these_cards(sample_cards):
-    assert True
-    # summary = Trellist.summarize_these(sample_cards)
-    # assert sample_cards == summary
+    summary = Trellist.summarize_these(sample_cards)
+    expected = \
+"""- card headline 0
+- card headline 1
+- card headline 2
+- card headline 3"""
+    assert expected == summary
 
 def test_get_board(trellist):
     #let's connect and get a board
@@ -47,4 +49,11 @@ def test_get_list_by_name(trellist):
     l = trellist.get_list_by_name(done_name)
     assert l.name == done_name
 
-
+def test_get_done_cards(trellist):
+    # need to set up and insert done cards for the test
+    for num in range(0,4):
+        trellist.done.add_card(f"card {num}", f"description {num}")
+    done_cards = trellist.get_done_cards()
+    # tear down - remove every card on the list
+    trellist.done.archive_all_cards()
+    assert len(done_cards) == 4

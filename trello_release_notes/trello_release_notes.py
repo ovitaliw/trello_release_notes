@@ -2,6 +2,7 @@
 
 """Main module."""
 from trello import TrelloClient
+from datetime import date
 
 """
 # given a list of boards
@@ -38,8 +39,7 @@ class Trellist(object):
     def run(self):
         # get all cards in the done board
         cards = self.get_done_cards()
-        summary = self.summarize_these(cards)
-        release_card = self.create_release_card(self.release_template, summary)
+        release_card = self.create_release_card(self.release_template, cards)
         for card in cards:
             if self.create_comment_per_item:
                 self.add_comment_to_release(release_card, card)
@@ -71,8 +71,16 @@ class Trellist(object):
         return next((i for i in iterable if condition(i)), None)
 
     def get_done_cards(self):
-        raise NotImplementedError
+        return self.done.list_cards()
 
     @classmethod
     def summarize_these(self, cards):
-        raise NotImplementedError
+        summary = "\n".join([f"- {card.name}" for card in cards])
+        return summary
+
+    def create_release_card(self, template, cards):
+        release_card_name = template.format(date=date.today().isoformat(), count=len(cards))
+        # turn list of names of cards into a summary
+        summary = self.summarize_these(cards)
+        release_card = self.releases.add_card(release_card_name, summary)
+        return release_card
