@@ -1,10 +1,12 @@
 """Handle the commandline, perform the archiving and creating the release notes"""
 from configargparse import ArgumentParser
+from trello_release_notes.trello_release_notes import Trellist
 
 
 def main(args):
     """Run through and execute the archiving"""
-    raise NotImplementedError
+    t = Trellist(args.apikey, args.apisecret, args.boardname, args.done_list, args.releases)
+    t.run()
 
 
 def get_args(arguments):
