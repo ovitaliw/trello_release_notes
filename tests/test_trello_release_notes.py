@@ -26,7 +26,8 @@ def sample_cards():
         {"description": "card headline 6"},
     ]
 
-@pytest.fixture
+# scope at module level to avoid extra get_board calls
+@pytest.fixture(scope="module")
 def trellist():
     return Trellist(args.apikey, args.apisecret, args.boardname, args.done_list, args.releases)
 

@@ -21,10 +21,10 @@ from trello import TrelloClient
 
 class Trellist(object):
     def __init__(self, apikey, apisecret, boardname, done_list_name="done", releases_list_name="releases"):
-        self.board = boardname
+        self.client = TrelloClient(api_key=apikey, api_secret=apisecret)
+        self.board = self.get_board(boardname)
         self.done = done_list_name
         self.releases = releases_list_name
-        self.client = TrelloClient(api_key=apikey, api_secret=apisecret)
         self.release_template = "{date} release: {count} done"
         self.create_comment_per_item = True
 
