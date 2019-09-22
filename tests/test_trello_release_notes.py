@@ -14,6 +14,11 @@ args = get_args(["--config", "tests/trello_test_settings.ini"])
 boardname = args.boardname
 done_name = args.done_list
 releases_name = args.releases
+expected_summary = \
+"""- card headline 0
+- card headline 1
+- card headline 2
+- card headline 3"""
 
 
 @pytest.fixture
@@ -32,12 +37,7 @@ def trellist():
 
 def test_summarize_these_cards(sample_cards):
     summary = Trellist.summarize_these(sample_cards)
-    expected = \
-"""- card headline 0
-- card headline 1
-- card headline 2
-- card headline 3"""
-    assert expected == summary
+    assert expected_summary == summary
 
 def test_get_board(trellist):
     #let's connect and get a board
@@ -57,3 +57,11 @@ def test_get_done_cards(trellist):
     # tear down - remove every card on the list
     trellist.done.archive_all_cards()
     assert len(done_cards) == 4
+
+def test_create_release_card(trellist, sample_cards):
+    card = trellist.create_release_card(trellist.release_template, sample_cards)
+    assert card.description == expected_summary
+    expected_card_sample_count = "{}".format(len(sample_cards))
+    count_from_name = card.name.split( " ")[2]
+    card.delete()
+    assert count_from_name == expected_card_sample_count

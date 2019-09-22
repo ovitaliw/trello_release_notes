@@ -50,7 +50,6 @@ class Trellist(object):
 
         :param board_name:
         """
-        # return next(( b for b in self.client.list_boards() if b.name == board_name and not b.closed), None)
         return self.first(self.client.list_boards(), lambda b: b.name == board_name and not b.closed)
 
     def get_list_by_name(self, name):
@@ -58,8 +57,6 @@ class Trellist(object):
 
         :param name:
         """
-
-        # return next((l for l in self.board.list_lists() if l.name == name), None)
         return self.first(self.board.list_lists(), lambda l: l.name == name)
 
     def first(self, iterable, condition):
