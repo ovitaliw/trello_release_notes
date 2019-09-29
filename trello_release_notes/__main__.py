@@ -5,7 +5,9 @@ from trello_release_notes.trello_release_notes import Trellist
 
 def main(args):
     """Run through and execute the archiving"""
-    t = Trellist(args.apikey, args.apisecret, args.boardname, args.done_list, args.releases)
+    t = Trellist(
+        args.apikey, args.apisecret, args.boardname, args.done_list, args.releases
+    )
     t.run()
 
 
@@ -15,8 +17,10 @@ def get_args(arguments):
         description="A tool to archive what you've done in trello to a release like Alice Goldfuss does",
     )
     parser.add_argument(
-        "-c", "--config", is_config_file=True,
-        help="A path to a config file for these options. The default is ~/.trello_release_settings.ini"
+        "-c",
+        "--config",
+        is_config_file=True,
+        help="A path to a config file for these options. The default is ~/.trello_release_settings.ini",
     )
     parser.add_argument(
         "--apikey",
