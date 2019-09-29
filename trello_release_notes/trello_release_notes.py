@@ -21,20 +21,21 @@ from datetime import date
 
 
 class Trellist(object):
-    def __init__(self, apikey, apisecret, boardname, done_list_name="done", releases_list_name="releases"):
+    def __init__(self, apikey, apisecret, boardname, done_list_name="done", releases_list_name="releases", create_comments=True):
+        """Ah the init method.
+
+        :param apikey:
+        :param apisecret:
+        :param boardname:
+        :param done_list_name:
+        :param releases_list_name:
+        """
         self.client = TrelloClient(api_key=apikey, api_secret=apisecret)
         self.board = self.get_board(boardname)
         self.done = self.get_list_by_name(done_list_name)
         self.releases = self.get_list_by_name(releases_list_name)
         self.release_template = "{date} release: {count} done"
-        self.create_comment_per_item = True
-
-    def cards_to_data(self, cards):
-        """returns a dict of card data
-
-        :param cards: list of card objects
-        """
-        raise NotImplementedError
+        self.create_comment_per_item = create_comments
 
     def run(self):
         # get all cards in the done board
