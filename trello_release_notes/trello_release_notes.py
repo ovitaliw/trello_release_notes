@@ -21,7 +21,15 @@ from datetime import date
 
 
 class Trellist(object):
-    def __init__(self, apikey, apisecret, boardname, done_list_name="done", releases_list_name="releases", create_comments=True):
+    def __init__(
+        self,
+        apikey,
+        apisecret,
+        boardname,
+        done_list_name="done",
+        releases_list_name="releases",
+        create_comments=True,
+    ):
         """Ah the init method.
 
         :param apikey:
@@ -51,7 +59,9 @@ class Trellist(object):
 
         :param board_name:
         """
-        return self.first(self.client.list_boards(), lambda b: b.name == board_name and not b.closed)
+        return self.first(
+            self.client.list_boards(), lambda b: b.name == board_name and not b.closed
+        )
 
     def get_list_by_name(self, name):
         """iterate lists and get the first one matching the name passed in
@@ -77,7 +87,9 @@ class Trellist(object):
         return summary
 
     def create_release_card(self, template, cards):
-        release_card_name = template.format(date=date.today().isoformat(), count=len(cards))
+        release_card_name = template.format(
+            date=date.today().isoformat(), count=len(cards)
+        )
         # turn list of names of cards into a summary
         summary = self.summarize_these(cards)
         release_card = self.releases.add_card(release_card_name, summary)
