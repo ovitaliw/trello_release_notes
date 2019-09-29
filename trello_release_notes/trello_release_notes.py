@@ -52,7 +52,7 @@ class Trellist(object):
         for card in cards:
             if self.create_comment_per_item:
                 self.add_comment_to_release(release_card, card)
-            self.archive_card(card)
+            self.set_closed(True)
 
     def get_board(self, board_name):
         """Gets the open board object by a name, otherwise returns None
@@ -94,3 +94,9 @@ class Trellist(object):
         summary = self.summarize_these(cards)
         release_card = self.releases.add_card(release_card_name, summary)
         return release_card
+
+    def add_comment_to_release(self, release_card, card, comment_format=None):
+        if comment_format is None:
+            comment_format = "{card.name}\n{card.url}\n{card.description}"
+        comment_text = comment_format.format(card=card)
+        release_card.comment(comment_text)
