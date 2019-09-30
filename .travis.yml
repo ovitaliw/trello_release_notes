@@ -1,15 +1,14 @@
-# Config file for automatic testing at travis-ci.org
-
 language: python
 python:
-  - 3.6
-  - 3.5
-  - 3.4
-
-# Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+- 3.6
+- 3.5
+- 3.4
 install: pip install -U tox-travis
-
-# Command to run tests, e.g. python setup.py test
 script: tox
-
-
+env:
+  global:
+  - booardname: trellist_test
+  - done_list: Finished
+  - releases: Releases
+  - secure: khCgRPmn2q8WcTNBm7mGOpsI2YKP5HWtWqfgr7Pr4hjHZDQpUxp5m1TqaPvtMvHjQxcZU8K3IkaYnFC9hV0VNM/1A4QOEWtWdUISbaDnEEbHaIGn51YgKYwiiMq1hccZFX4iUHaj0kXaa2AGRRf39yV+n2DvzwDQt37UuDQ6Akd0IXpZKqCK/+pcQX5KCYPtYtSqg7wNIUouhfEzvmnyBgoaKOXVUlzxN8rXsJIjnhTjQw6J/zJc98JCKg9mw7rTwGUlOfOejWQh8wXqNVvguy10IdhKJWs+5YsJ1/no17J5sRNzyCWeRldi/I9FKB0anZXlO2f4xrH3ZUatf0lRl6Sgte3aoHMsCPYgl3GEK5QC3+qz/E1Qt/0bDVw0fAMzuenpTJG5zVunBV4JdBlXyf3g3OALHkiTxoGcu084erGPE3xKJwLtASGZhryc37Dht38JXOzyB7JCVip3XKc5VLPKiHjPcz7cfTiw6ZQXWz3S8jchRQodT2l70+5OosBmI0SdNwytiAxv/fCKug+4XVS4mBbS1IFPsziHyN8cb4SNX5i4n4asS09HjDTKG5ZEwLMdNgU7TOD3lJ2EwCewAvV9zQfuYTGdp+BdBsjvPPjl8WMjnrjObTuhVSYOjWFVb5BbmmNAUiW/Bl9hvxVrAkjE3WWcRhiBeskzQCqtpcE=
+  - secure: W3G8326zMyMjK2RHs5IHqKOPy5879Z/9C6xdAlhps5w8YIMILfDKxOmOzYuYV3rFVRl4dWrKWM9GkvjB4lR+6D5n5bZGa4rNC2vkVLTL4Jz3TbDaKuw4E4QnoCSNo+iprAkI20wHWPNvp2woM+HF/e0DE06DY3zS0pzI5QcpgL74XSFbsaf4GnoXqY/eHSWD442CegrGOTCIAWuPF2b14GSv9IwYzSrvW+A79m5rAFKLUQgx4hGLql3ujdxLuyYXN7kzOGy5lePi7LssoOvHSe4UJ9CPl/8Yz+B5sPzbvjUmewgrXjd64U7l2eyQPuTRA04gXMULk3c02ROtb8FrDn9x3NC/mXB9V+EO2JpuC+MvViEi/HB1kHsaRXdJVlFOvBi65u5ac2xu+8l82Cv4Hh4GYQKrqsFmiSzJ+SaSuyo9un+bVxUjv06h4sy+LhFoq+L2q5Ev3eC/H93LCGXbXEW3F5UV6KI1KX8uptUSIG5gOoK7TnPDEipBUtQaY6+QaSqU3sXet9NgkGZzurg2twhSOqUR3nedjJk8LffB2p4zz1esqTPFTUkQ1cHMM+0yl4ujlGS9Xb6SjQnLxBFqwTYJIjcr2D3S+nOiWRcJr1a7hGvYSqIw5gYfKMEpybHUp9q5lsDF25VO7R+wIsBUjZHPtgjUKE+cPP3XctIV0AE=
