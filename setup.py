@@ -32,6 +32,9 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     description="Take your weekly done cards and turn them into a bulleted list in another column, just like Alice Goldfuss does.",
+    entry_points = {
+                'console_scripts': ['trello-release=trello_release_notes.__main__:main'],
+            },
     install_requires=requirements,
     license="MIT license",
     long_description=readme + '\n\n' + history,

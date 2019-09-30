@@ -3,8 +3,10 @@ from configargparse import ArgumentParser
 from trello_release_notes.trello_release_notes import Trellist
 
 
-def main(args):
+def main():
     """Run through and execute the archiving"""
+    parser = get_arg_parser()
+    args = parser.parse_args()
     t = Trellist(
         args.apikey,
         args.apisecret,
@@ -56,5 +58,4 @@ def get_arg_parser():
 
 
 if __name__ == "__main__":
-    parser = get_arg_parser()
-    main(parser.parse_args())
+    main()
