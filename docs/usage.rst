@@ -20,7 +20,7 @@ To get more advanced, explore the options listed in the help::
 
     trello-release --help
 
-To use Weekly Trello Notes in a project::
+To use Trello Release Notes in a project::
 
     import trello_release_notes
 

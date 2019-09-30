@@ -47,7 +47,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Weekly Trello Notes'
+project = u'Trello Release Notes'
 copyright = u"2019, Matt Katz"
 author = u"Matt Katz"
 
@@ -129,7 +129,7 @@ latex_elements = {
 # [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'trello_release_notes.tex',
-     u'Weekly Trello Notes Documentation',
+     u'Trello Release Notesi Documentation',
      u'Matt Katz', 'manual'),
 ]
 
@@ -140,7 +140,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (master_doc, 'trello_release_notes',
-     u'Weekly Trello Notes Documentation',
+     u'Trello Release Notesi Documentation',
      [author], 1)
 ]
 
@@ -152,10 +152,10 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'trello_release_notes',
-     u'Weekly Trello Notes Documentation',
+     u'Trello Release Notesi Documentation',
      author,
      'trello_release_notes',
-     'One line description of project.',
+     'Gather your done trello cards into a single release every week.',
      'Miscellaneous'),
 ]
 

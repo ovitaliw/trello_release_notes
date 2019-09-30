@@ -8,13 +8,13 @@ Installation
 Stable release
 --------------
 
-To install Weekly Trello Notes, run this command in your terminal:
+To install Trello Release Notes, run this command in your terminal:
 
 .. code-block:: console
 
     $ pip install trello_release_notes
 
-This is the preferred method to install Weekly Trello Notes, as it will always install the most recent stable release.
+This is the preferred method to install Trello Release Notes, as it will always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -26,7 +26,7 @@ you through the process.
 From sources
 ------------
 
-The sources for Weekly Trello Notes can be downloaded from the `Github repo`_.
+The sources for Trello Release Notes can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 
