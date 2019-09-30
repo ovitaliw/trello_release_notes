@@ -26,7 +26,16 @@ Take your weekly done cards and turn them into a bulleted list in another column
 Features
 --------
 https://trello-release-notes.readthedocs.io
-* TODO
+
+* custom formatting for card summaries
+* create comments on release cards with more detail so you can look at the archived cards
+* skip releases where you didn't put anything in the done column
+
+TODO
+----
+
+* Make the readthedocs docs build full API documentation. (works locally!)
+* publish to pypi
 
 Credits
 -------
