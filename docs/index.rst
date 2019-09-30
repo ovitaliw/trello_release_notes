@@ -1,4 +1,4 @@
-Welcome to Weekly Trello Notes's documentation!
+Welcome to Trello Release Note's documentation!
 ===============================================
 
 .. toctree::
