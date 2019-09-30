@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 """Main module."""
-from trello import TrelloClient
 from datetime import date
+from trello import TrelloClient
+from loguru import logger
 
 """
 # given a list of boards
@@ -48,14 +49,16 @@ class Trellist(object):
         self.create_release_if_zero_done = create_release_if_zero_done
 
     def run(self):
-        # get all cards in the done board
+        logger.info(f"get all cards in the done board: {self.done.name}")
         cards = self.get_done_cards()
+        logger.info(f"got {len(cards)} cards")
         if cards or self.create_release_if_zero_done:
             release_card = self.create_release_card(self.release_template, cards)
             for card in cards:
                 if self.create_comment_per_item:
                     self.add_comment_to_release(release_card, card)
                 card.set_closed(True)
+        logger.info("finished run")
 
     def get_board(self, board_name):
         """Gets the open board object by a name, otherwise returns None
@@ -95,6 +98,7 @@ class Trellist(object):
         )
         # turn list of names of cards into a summary
         summary = self.summarize_these(cards)
+        logger.info(f"{summary}")
         release_card = self.releases.add_card(release_card_name, summary)
         return release_card
 

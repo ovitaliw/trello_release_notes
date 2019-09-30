@@ -11,3 +11,4 @@ twine==1.12.1
 pytest==3.8.2
 pytest-runner==4.2
 configargparse>=0.14.0
+loguru>=0.3.2
