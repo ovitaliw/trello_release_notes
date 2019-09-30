@@ -56,8 +56,8 @@ def test_get_board(trellist):
 
 
 def test_get_list_by_name(trellist):
-    l = trellist.get_list_by_name(done_name)
-    assert l.name == done_name
+    trello_list = trellist.get_list_by_name(done_name)
+    assert trello_list.name == done_name
 
 
 def test_get_done_cards(trellist):
