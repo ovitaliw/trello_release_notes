@@ -16,10 +16,10 @@ args = None
 if  test_ini.exists():
     args = get_arg_parser().parse_args(["--config", str(test_ini)])
 else:
-    Args = namedtuple("Args", "apikey apisecret boardname done_list releases")
-    from os import environ
-    args = Args(environ['apikey'], environ['apisecret'], environ['boardname'], environ['done_list'], environ['releases'])
-    # args = get_arg_parser().parse_args()
+    # Args = namedtuple("Args", "apikey apisecret boardname done_list releases")
+    # import os
+    # args = Args(os.environ['apikey'], os.environ['apisecret'], os.environ['boardname'], os.environ['done_list'], os.environ['releases'])
+    args = get_arg_parser().parse_known_args()
 
 boardname = args.boardname
 done_name = args.done_list
