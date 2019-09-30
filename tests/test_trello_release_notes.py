@@ -7,10 +7,10 @@ import pytest
 
 
 from trello_release_notes.trello_release_notes import Trellist
-from trello_release_notes.__main__ import get_args
+from trello_release_notes.__main__ import get_arg_parser
 from collections import namedtuple
 
-args = get_args(["--config", "tests/trello_test_settings.ini"])
+args = get_arg_parser().parse_args(["--config", "tests/trello_test_settings.ini"])
 boardname = args.boardname
 done_name = args.done_list
 releases_name = args.releases

@@ -6,12 +6,17 @@ from trello_release_notes.trello_release_notes import Trellist
 def main(args):
     """Run through and execute the archiving"""
     t = Trellist(
-        args.apikey, args.apisecret, args.boardname, args.done_list, args.releases
+        args.apikey,
+        args.apisecret,
+        args.boardname,
+        args.done_list,
+        args.releases,
+        args.create_empty_release,
     )
     t.run()
 
 
-def get_args(arguments):
+def get_arg_parser():
     parser = ArgumentParser(
         default_config_files=["~/.trello_release_settings.ini"],
         description="A tool to archive what you've done in trello to a release like Alice Goldfuss does",
@@ -35,12 +40,21 @@ def get_args(arguments):
     parser.add_argument(
         "--boardname", help="Name of the board we want to archive from."
     )
-    parser.add_argument("--done_list", help="Name of the list we want to archive from.")
-    parser.add_argument("--releases", help="Name of the list we want to archive to.")
-    args = parser.parse_args(arguments)
-    return args
+    parser.add_argument(
+        "-d", "--done_list", help="Name of the list we want to archive from."
+    )
+    parser.add_argument(
+        "-r", "--releases", help="Name of the list we want to archive to."
+    )
+    parser.add_argument(
+        "-z",
+        "--create_empty_release",
+        action="store_true",
+        help="specify if you want to create a release even if nothing got done",
+    )
+    return parser
 
 
 if __name__ == "__main__":
-    args = get_args()
-    main(args)
+    parser = get_arg_parser()
+    main(parser.parse_args())

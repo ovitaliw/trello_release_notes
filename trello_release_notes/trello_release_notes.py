@@ -29,6 +29,7 @@ class Trellist(object):
         done_list_name="done",
         releases_list_name="releases",
         create_comments=True,
+        create_release_if_zero_done=False,
     ):
         """Ah the init method.
 
@@ -44,15 +45,17 @@ class Trellist(object):
         self.releases = self.get_list_by_name(releases_list_name)
         self.release_template = "{date} release: {count} done"
         self.create_comment_per_item = create_comments
+        self.create_release_if_zero_done = create_release_if_zero_done
 
     def run(self):
         # get all cards in the done board
         cards = self.get_done_cards()
-        release_card = self.create_release_card(self.release_template, cards)
-        for card in cards:
-            if self.create_comment_per_item:
-                self.add_comment_to_release(release_card, card)
-            self.set_closed(True)
+        if cards or self.create_release_if_zero_done:
+            release_card = self.create_release_card(self.release_template, cards)
+            for card in cards:
+                if self.create_comment_per_item:
+                    self.add_comment_to_release(release_card, card)
+                card.set_closed(True)
 
     def get_board(self, board_name):
         """Gets the open board object by a name, otherwise returns None
