@@ -22,6 +22,16 @@ from loguru import logger
 
 
 class Trellist(object):
+    """The main object - initialize and use run()
+
+    :param apikey: Your api-key.
+    :param apisecret: Your api secret token. Get it from a protected file that you don't commit. Keep it secret!
+    :param boardname: Name of the board to work on.
+    :param done_list_name: The name of the done list on your board. Only one.
+    :param releases_list_name: The name of the list to put release cards on.
+    :param create_comments: True by default. Create a comment on the release card for each done card
+    :param create_release_if_zero_done: If nothing is done, should you make a sad empty release card?
+    """
     def __init__(
         self,
         apikey,
