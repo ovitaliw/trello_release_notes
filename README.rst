@@ -1,6 +1,6 @@
-===================
-Weekly Trello Notes
-===================
+====================
+Trello Release Notes
+====================
 
 
 .. image:: https://img.shields.io/pypi/v/trello_release_notes.svg
@@ -9,8 +9,8 @@ Weekly Trello Notes
 .. image:: https://img.shields.io/travis/mattkatz/trello_release_notes.svg
         :target: https://travis-ci.org/mattkatz/trello_release_notes
 
-.. image:: https://readthedocs.org/projects/weekly-trello-notes/badge/?version=latest
-        :target: https://weekly-trello-notes.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/trello-release-notes/badge/?version=latest
+        :target: https:/https://trello-release-notes.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
 
@@ -20,12 +20,12 @@ Take your weekly done cards and turn them into a bulleted list in another column
 
 
 * Free software: MIT license
-* Documentation: https://weekly-trello-notes.readthedocs.io.
+* Documentation: https://trello-release-notes.readthedocs.io.
 
 
 Features
 --------
-
+https://trello-release-notes.readthedocs.io
 * TODO
 
 Credits
