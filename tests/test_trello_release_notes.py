@@ -17,7 +17,7 @@ test_ini = Path( "tests/trello_test_settings.ini")
 if  test_ini.exists():
     args = get_arg_parser().parse_args(["--config", str(test_ini)])
 else:
-    args = get_arg_parser().parse_args()
+    args = get_arg_parser().parse_known_args()
 
 boardname = args.boardname
 done_name = args.done_list
