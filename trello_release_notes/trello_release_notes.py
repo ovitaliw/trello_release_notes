@@ -42,14 +42,6 @@ class Trellist(object):
         create_comments=True,
         create_release_if_zero_done=False,
     ):
-        """Ah the init method.
-
-        :param apikey:
-        :param apisecret:
-        :param boardname:
-        :param done_list_name:
-        :param releases_list_name:
-        """
         self.client = TrelloClient(api_key=apikey, api_secret=apisecret)
         self.board = self.get_board(boardname)
         self.done = self.get_list_by_name(done_list_name)
@@ -59,6 +51,7 @@ class Trellist(object):
         self.create_release_if_zero_done = create_release_if_zero_done
 
     def run(self):
+        """Runs through all the methods to perform the work"""
         logger.info(f"get all cards in the done board: {self.done.name}")
         cards = self.get_done_cards()
         logger.info(f"got {len(cards)} cards")
@@ -73,7 +66,7 @@ class Trellist(object):
     def get_board(self, board_name):
         """Gets the open board object by a name, otherwise returns None
 
-        :param board_name:
+        :param board_name: actual name of a board you have access to
         """
         return self.first(
             self.client.list_boards(), lambda b: b.name == board_name and not b.closed
@@ -82,7 +75,7 @@ class Trellist(object):
     def get_list_by_name(self, name):
         """iterate lists and get the first one matching the name passed in
 
-        :param name:
+        :param name: Name of a list on the board you've passed in
         """
         return self.first(self.board.list_lists(), lambda l: l.name == name)
 
