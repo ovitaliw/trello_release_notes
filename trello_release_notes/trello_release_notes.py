@@ -32,6 +32,7 @@ class Trellist(object):
     :param create_comments: True by default. Create a comment on the release card for each done card
     :param create_release_if_zero_done: If nothing is done, should you make a sad empty release card?
     """
+
     def __init__(
         self,
         apikey,
@@ -56,7 +57,7 @@ class Trellist(object):
         cards = self.get_done_cards()
         logger.info(f"got {len(cards)} cards")
         if cards or self.create_release_if_zero_done:
-            release_card = self.create_release_card(self.release_template, cards)
+            release_card = self.create_release_card(cards, self.release_template)
             for card in cards:
                 if self.create_comment_per_item:
                     self.add_comment_to_release(release_card, card)
@@ -73,40 +74,58 @@ class Trellist(object):
         )
 
     def get_list_by_name(self, name):
-        """iterate lists and get the first one matching the name passed in
+        """Iterate lists and get the first one matching the name passed in
 
         :param name: Name of a list on the board you've passed in
         """
         return self.first(self.board.list_lists(), lambda l: l.name == name)
 
     def first(self, iterable, condition):
-        """iterates an iterable and returns the first item that meets a condition or None
+        """Iterates an iterable and returns the first item that meets a condition or None
 
-        :param iterable:
-        :param condition:
+        :param iterable: An iterable to fetch the first itemm that meets condition
+        :param condition: The condition to evaluate per item
         """
         return next((i for i in iterable if condition(i)), None)
 
     def get_done_cards(self):
+        """Get every card from the done list"""
         return self.done.list_cards()
 
     @classmethod
-    def summarize_these(self, cards):
-        summary = "\n".join([f"- {card.name}" for card in cards])
+    def summarize_these(self, cards, template="- {card.name}"):
+        """Run a list of cards through a template and return those joined by newlines
+
+        :param cards: Card objects to summarize
+        :param template: A template for each card. We pass the full card to format
+        """
+        summary = "\n".join([template.format(card=card) for card in cards])
         return summary
 
-    def create_release_card(self, template, cards):
-        release_card_name = template.format(
-            date=date.today().isoformat(), count=len(cards)
-        )
+    def create_release_card(self, cards, template):
+        """Returns a new release card, with a title from template and description based on a summary of the cards
+
+        :param cards: Cards in this release
+        :param template: A format string that we pass in date and length of cards
+        """
+        release_card_name = template.format(date=date.today(), count=len(cards))
         # turn list of names of cards into a summary
         summary = self.summarize_these(cards)
         logger.info(f"{summary}")
         release_card = self.releases.add_card(release_card_name, summary)
         return release_card
 
-    def add_comment_to_release(self, release_card, card, comment_format=None):
-        if comment_format is None:
-            comment_format = "{card.name}\n{card.url}\n{card.description}"
+    def add_comment_to_release(
+        self,
+        release_card,
+        card,
+        comment_format="{card.name}\n{card.url}\n{card.description}",
+    ):
+        """add_comment_to_release
+
+        :param release_card: A card to comment on
+        :param card: A card to summarize in a comment
+        :param comment_format: The template, passed in the card.
+        """
         comment_text = comment_format.format(card=card)
         release_card.comment(comment_text)

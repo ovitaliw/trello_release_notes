@@ -71,7 +71,7 @@ def test_get_done_cards(trellist):
 
 
 def test_create_release_card(trellist, sample_cards):
-    card = trellist.create_release_card(trellist.release_template, sample_cards)
+    card = trellist.create_release_card(sample_cards, trellist.release_template)
     assert card.description == expected_summary
     expected_card_sample_count = "{}".format(len(sample_cards))
     count_from_name = card.name.split(" ")[2]
