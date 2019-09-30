@@ -1,5 +1,5 @@
 Welcome to Weekly Trello Notes's documentation!
-======================================
+===============================================
 
 .. toctree::
    :maxdepth: 2
