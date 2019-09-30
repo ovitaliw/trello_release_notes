@@ -9,8 +9,16 @@ import pytest
 from trello_release_notes.trello_release_notes import Trellist
 from trello_release_notes.__main__ import get_arg_parser
 from collections import namedtuple
+from pathlib import Path
 
-args = get_arg_parser().parse_args(["--config", "tests/trello_test_settings.ini"])
+# define a test ini file - if it exists, let's use that.
+# if it doesn't exist, hope these vars are defined as env vars to get picked up by configargparse
+test_ini = Path( "tests/trello_test_settings.ini")
+if  test_ini.exists():
+    args = get_arg_parser().parse_args(["--config", str(test_ini)])
+else:
+    args = get_arg_parser().parse-args()
+
 boardname = args.boardname
 done_name = args.done_list
 releases_name = args.releases
