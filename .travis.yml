@@ -16,7 +16,7 @@ deploy:
   edge: true
   username: __token__
   skip-existing: true
-  distributions: "sdist bdist-wheel"
+  distributions: "sdist"
   on:
     tags: true
     branch: master
