@@ -34,7 +34,6 @@ https://trello-release-notes.readthedocs.io
 TODO
 ----
 
-* Make the readthedocs docs build full API documentation. (works locally!)
 * publish to pypi
 
 Credits
