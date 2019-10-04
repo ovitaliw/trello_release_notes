@@ -42,6 +42,30 @@ Trello Release Notes could always use more documentation, whether as part of the
 official Trello Release Notes docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
+- Use `semantic newlines`_ in reStructuredText_ files (files ending in ``.rst``):
+
+  .. code-block:: rst
+
+     This is a sentence.
+     This is another sentence.
+
+- If you start a new section, add two blank lines before and one blank line after the header, except if two headers follow immediately after each other:
+
+  .. code-block:: rst
+
+     Last line of previous section.
+
+
+     Header of New Top Section
+     -------------------------
+
+     Header of New Section
+     ^^^^^^^^^^^^^^^^^^^^^
+
+     First line of new section.
+
+- If you add a new feature, demonstrate its awesomeness on the :doc:`README <readme/>`.
+
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
@@ -126,3 +150,6 @@ $ git push
 $ git push --tags
 
 Travis will then deploy to PyPI if tests pass.
+
+.. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
+.. _semantic newlines: https://rhodesmill.org/brandon/2012/one-sentence-per-line/
