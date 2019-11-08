@@ -1,3 +1,5 @@
+
+
 =======
 History
 =======
@@ -13,4 +15,8 @@ History
 * First release to pypi
 * Docs on readthedocs
 
+0.2.5 / 2019-11-08
+------------------
+
+* fix bug where archived cards weren't commented
 
