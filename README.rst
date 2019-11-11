@@ -32,8 +32,7 @@ Features
 * create comments on release cards with more detail so you can look at the archived cards
 * skip releases where you didn't put anything in the done column
 
-
-
+.. include:: installation.rst
 
 Credits
 -------
