@@ -88,11 +88,14 @@ Ready to contribute? Here's how to set up `trello_release_notes` for local devel
 
     $ git clone git@github.com:your_name_here/trello_release_notes.git
 
-3. Create and activate a local virtual environment.  There's lots of `tools for virtual environments`_ and you should do your favorite.  If you don't have a favorite, the below will work for you.  However you've created and activated a virtual environment, the last line will set up yyour environment.::
+3. Create and activate a local virtual environment.
+   There's lots of `tools for virtual environments`_ and you should do your favorite.
+   If you don't have a favorite, the below will work for you.
+   However you've created and activated a virtual environment, the last line will set up your environment.::
 
     $ cd trello_release_notes/
-    $ python3 -m virtualenv env
-    $ source env/bin/activate
+    $ python3 -m virtualenv ~/trello_release_notes_env
+    $ source ~/trello_release_notes_env/bin/activate
     $ pip install -e ".[dev]"
 
 4. Create a branch for local development::
