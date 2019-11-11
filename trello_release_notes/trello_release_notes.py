@@ -40,16 +40,16 @@ class Trellist(object):
         boardname,
         done_list_name="done",
         releases_list_name="releases",
-        create_comments=True,
         create_release_if_zero_done=False,
+        create_comments=True,
     ):
         self.client = TrelloClient(api_key=apikey, api_secret=apisecret)
         self.board = self.get_board(boardname)
         self.done = self.get_list_by_name(done_list_name)
         self.releases = self.get_list_by_name(releases_list_name)
         self.release_template = "{date} release: {count} done"
-        self.create_comment_per_item = create_comments
         self.create_release_if_zero_done = create_release_if_zero_done
+        self.create_comment_per_item = create_comments
 
     def run(self):
         """Runs through all the methods to perform the work"""
@@ -58,6 +58,7 @@ class Trellist(object):
         logger.info(f"got {len(cards)} cards")
         if cards or self.create_release_if_zero_done:
             release_card = self.create_release_card(cards, self.release_template)
+            import pudb; pu.db
             for card in cards:
                 if self.create_comment_per_item:
                     self.add_comment_to_release(release_card, card)
@@ -65,12 +66,21 @@ class Trellist(object):
         logger.info("finished run")
 
     def get_board(self, board_name):
-        """Gets the open board object by a name, otherwise returns None
+        """Gets the open board object by a name, otherwise raises an Error to
+        let you know we don't have that board
 
         :param board_name: actual name of a board you have access to
         """
-        return self.first(
+        board = self.first(
             self.client.list_boards(), lambda b: b.name == board_name and not b.closed
+        )
+        if board:
+            return board
+        raise ValueError(
+            (
+                "Couldn't find an open board named '{}'. Check the name in your"
+                " trello - are there extra quote marks in this message?"
+            ).format(board_name)
         )
 
     def get_list_by_name(self, name):
@@ -78,7 +88,15 @@ class Trellist(object):
 
         :param name: Name of a list on the board you've passed in
         """
-        return self.first(self.board.list_lists(), lambda l: l.name == name)
+        trello_list = self.first(self.board.list_lists(), lambda l: l.name == name)
+        if trello_list:
+            return trello_list
+        raise ValueError(
+            (
+                "Couldn't find a list named '{}'. Check the name in your trello"
+                " - are there extra quote marks in this message?"
+            ).format(name)
+        )
 
     def first(self, iterable, condition):
         """Iterates an iterable and returns the first item that meets a condition or None
