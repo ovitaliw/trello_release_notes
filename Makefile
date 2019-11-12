@@ -1,4 +1,4 @@
-.PHONY: clean clean-test clean-pyc clean-build docs help
+.PHONY: clean clean-test clean-pyc clean-build docs monitor help
 .DEFAULT_GOAL := help
 
 define BROWSER_PYSCRIPT
@@ -61,6 +61,9 @@ test-all: ## run tests on every Python version with tox
 
 test-mon: ## run tests on every save
 	ag -l | entr -cs "tox --parallel auto"
+
+monitor: ## run tests on every save
+	watchmedo shell-command -p "*.py;*.rst" -c "tox --parallel auto"
 
 coverage: ## check code coverage quickly with the default Python
 	coverage run --source trello_release_notes -m pytest

@@ -11,11 +11,24 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['py-trello', 'ConfigArgParse', 'loguru']
+INSTALL_REQUIRES = ['py-trello', 'ConfigArgParse', 'loguru']
 
 setup_requirements = ['pytest-runner', ]
 
-test_requirements = ['pytest', ]
+EXTRAS_REQUIRE = {
+    "docs": ["sphinx", "watchdog[watchmedo]"],
+    "tests": [
+        "coverage",
+        # "hypothesis",
+        # "pympler",
+        "pytest>=4.3.0",  # 4.3.0 dropped last use of `convert`
+    ],
+}
+EXTRAS_REQUIRE["dev"] = (
+    EXTRAS_REQUIRE["tests"] + EXTRAS_REQUIRE["docs"] + ["pre-commit"]
+)
+print("here is what's in EXTRAS")
+print(EXTRAS_REQUIRE)
 
 setup(
     author="Matt Katz",
@@ -33,7 +46,8 @@ setup(
     entry_points = {
                 'console_scripts': ['trello-release=trello_release_notes.__main__:main'],
             },
-    install_requires=requirements,
+    install_requires=INSTALL_REQUIRES,
+    extras_require=EXTRAS_REQUIRE,
     license="MIT license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
@@ -42,7 +56,7 @@ setup(
     packages=find_packages(include=['trello_release_notes']),
     setup_requires=setup_requirements,
     test_suite='tests',
-    tests_require=test_requirements,
+    tests_require=EXTRAS_REQUIRE["tests"],
     url='https://github.com/mattkatz/trello_release_notes',
     version='0.2.5',
     zip_safe=False,

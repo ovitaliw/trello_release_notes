@@ -88,11 +88,15 @@ Ready to contribute? Here's how to set up `trello_release_notes` for local devel
 
     $ git clone git@github.com:your_name_here/trello_release_notes.git
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
+3. Create and activate a local virtual environment.
+   There's lots of `tools for virtual environments`_ and you should do your favorite.
+   If you don't have a favorite, the below will work for you.
+   However you've created and activated a virtual environment, the last line will set up your environment.::
 
-    $ mkvirtualenv trello_release_notes
     $ cd trello_release_notes/
-    $ python setup.py develop
+    $ python3 -m virtualenv ~/trello_release_notes_env
+    $ source ~/trello_release_notes_env/bin/activate
+    $ pip install -e ".[dev]"
 
 4. Create a branch for local development::
 
@@ -153,3 +157,4 @@ Travis will then deploy to PyPI if tests pass.
 
 .. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
 .. _semantic newlines: https://rhodesmill.org/brandon/2012/one-sentence-per-line/
+.. _tools for virtual environments: https://docs.python-guide.org/dev/virtualenvs/
