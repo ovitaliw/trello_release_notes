@@ -58,10 +58,22 @@ def trellist():
     )
 
 
-def test_summarize_these_cards(sample_cards):
-    summary = Trellist.summarize_these(sample_cards)
+def test_summarize_these_cards(trellist, sample_cards):
+    summary = trellist.summarize_these(sample_cards)
     assert expected_summary == summary
 
+def test_summarize_these_cards_with_members(trellist):
+    Card = namedtuple("Card", "name description url members")
+    Member = namedtuple("Member", "username full_name initials")
+    sample_member = Member(f"uname", "pepper salt", "ps")
+    sample_card = Card("card headline", "card description", "http://example.com", [sample_member])
+    # samples = [Card(f"card headline {num}", f"card description {num}", f"http://example.com/{num}",
+    #     Member(f"uname{num}", "pepper salt", "ps")) for num in range(0,4)]
+    # samples = [Card(f"card headline {num}", f"card description {num}", f"http://example.com/{num}", sample_member) for num in range(0,4)]
+    # summary = Trellist.summarize_these(samples, template="- {card.name} {' '.join(member.initials for member in card.members)}")
+    # assert expected_summary == summary
+    summary = trellist.summarize_this(sample_card, template="- {{card.name} [{card.members.initials}]")
+    assert summary == "- card headline ps"
 
 def test_get_board(trellist):
     # let's connect and get a board

@@ -4,6 +4,8 @@
 from datetime import date
 from trello import TrelloClient
 from loguru import logger
+from functools import lru_cache
+import pystache
 
 """
 # given a list of boards
@@ -54,11 +56,11 @@ class Trellist(object):
     def run(self):
         """Runs through all the methods to perform the work"""
         logger.info(f"get all cards in the done board: {self.done.name}")
+        # import pudb; pu.db
         cards = self.get_done_cards()
         logger.info(f"got {len(cards)} cards")
         if cards or self.create_release_if_zero_done:
             release_card = self.create_release_card(cards, self.release_template)
-            import pudb; pu.db
             for card in cards:
                 if self.create_comment_per_item:
                     self.add_comment_to_release(release_card, card)
@@ -98,6 +100,21 @@ class Trellist(object):
             ).format(name)
         )
 
+    def get_card_members(self, card):
+        """Return an array of fullnames of members of this card
+
+        :param card:
+        """
+        return [self.get_member(member_id) for member_id in getattr(card, "member_id")]
+
+    @lru_cache()
+    def get_member(self, member_id):
+        """Get a member. We only use our own function so that we can cache calls
+
+        :param member_id:
+        """
+        return self.client.get_member(member_id)
+
     def first(self, iterable, condition):
         """Iterates an iterable and returns the first item that meets a condition or None
 
@@ -110,15 +127,22 @@ class Trellist(object):
         """Get every card from the done list"""
         return self.done.list_cards()
 
-    @classmethod
     def summarize_these(self, cards, template="- {card.name}"):
         """Run a list of cards through a template and return those joined by newlines
 
         :param cards: Card objects to summarize
         :param template: A template for each card. We pass the full card to format
         """
-        summary = "\n".join([template.format(card=card) for card in cards])
+        # summary = "\n".join([template.format(card=card) for card in cards])
+        summary = "\n".join([self.summarize_this(card, template) for card in cards])
         return summary
+
+    def summarize_this(self, card, template):
+        card.members = self.get_card_members(card)
+        # render mustache template
+        return pystache.render(template, card)
+        # summary = template.format(card=card)
+        # return summary
 
     def create_release_card(self, cards, template):
         """Returns a new release card, with a title from template and description based on a summary of the cards
