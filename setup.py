@@ -11,7 +11,7 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-INSTALL_REQUIRES = ['py-trello', 'ConfigArgParse', 'loguru', 'pystache']
+INSTALL_REQUIRES = ['py-trello', 'ConfigArgParse', 'loguru']
 
 setup_requirements = ['pytest-runner', ]
 

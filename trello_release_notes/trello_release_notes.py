@@ -5,7 +5,6 @@ from datetime import date
 from trello import TrelloClient
 from loguru import logger
 from functools import lru_cache
-import pystache
 
 """
 # given a list of boards
@@ -50,17 +49,17 @@ class Trellist(object):
         self.done = self.get_list_by_name(done_list_name)
         self.releases = self.get_list_by_name(releases_list_name)
         self.release_template = "{date} release: {count} done"
+        self.card_summary_template = "- {card.name} {card.members_initials}"
         self.create_release_if_zero_done = create_release_if_zero_done
         self.create_comment_per_item = create_comments
 
     def run(self):
         """Runs through all the methods to perform the work"""
         logger.info(f"get all cards in the done board: {self.done.name}")
-        # import pudb; pu.db
         cards = self.get_done_cards()
         logger.info(f"got {len(cards)} cards")
         if cards or self.create_release_if_zero_done:
-            release_card = self.create_release_card(cards, self.release_template)
+            release_card = self.create_release_card(cards, self.release_template, self.card_summary_template)
             for card in cards:
                 if self.create_comment_per_item:
                     self.add_comment_to_release(release_card, card)
@@ -101,11 +100,11 @@ class Trellist(object):
         )
 
     def get_card_members(self, card):
-        """Return an array of fullnames of members of this card
+        """Return an array of Trello.Member objects of this card
 
         :param card:
         """
-        return [self.get_member(member_id) for member_id in getattr(card, "member_id")]
+        return [self.get_member(member_id) for member_id in card.member_id]
 
     @lru_cache()
     def get_member(self, member_id):
@@ -127,32 +126,47 @@ class Trellist(object):
         """Get every card from the done list"""
         return self.done.list_cards()
 
-    def summarize_these(self, cards, template="- {card.name}"):
+    def prep_card(self, card):
+        card.members = self.get_card_members(card)
+        card.members_initials = ""
+        card.members_full_names = ""
+        card.members_usernames = ""
+        if len(card.members):
+            card.members_initials = [member.initials for member in card.members]
+            card.members_full_names = [member.full_name for member in card.members]
+            card.members_usernames = [member.username for member in card.members]
+
+
+    def summarize_these(self, cards, template, prep_function):
         """Run a list of cards through a template and return those joined by newlines
+        The template can reference any part of a Trello.card as well as 3 handy arrays
+        - members_initials
+        - members_full_names
+        - members_usernames
+        These will either have an empty string or an array of strings that show up nicely
+        in string.format
 
         :param cards: Card objects to summarize
         :param template: A template for each card. We pass the full card to format
+        :param prep_function: A function that will add make the card more friendly to format
         """
-        # summary = "\n".join([template.format(card=card) for card in cards])
-        summary = "\n".join([self.summarize_this(card, template) for card in cards])
+        summary = "\n".join([self.summarize_this(card, template, prep_function) for card in cards])
         return summary
 
-    def summarize_this(self, card, template):
-        card.members = self.get_card_members(card)
-        # render mustache template
-        return pystache.render(template, card)
-        # summary = template.format(card=card)
-        # return summary
+    def summarize_this(self, card, template, prep_function):
+        card = prep_function(self,card)
+        summary = template.format(card=card)
+        return summary
 
-    def create_release_card(self, cards, template):
+    def create_release_card(self, cards, release_template, card_summary_template):
         """Returns a new release card, with a title from template and description based on a summary of the cards
 
         :param cards: Cards in this release
         :param template: A format string that we pass in date and length of cards
         """
-        release_card_name = template.format(date=date.today(), count=len(cards))
+        release_card_name = release_template.format(date=date.today(), count=len(cards))
         # turn list of names of cards into a summary
-        summary = self.summarize_these(cards)
+        summary = self.summarize_these(cards, template=card_summary_template, prep_function = self.prep_card)
         logger.info(f"{summary}")
         release_card = self.releases.add_card(release_card_name, summary)
         return release_card

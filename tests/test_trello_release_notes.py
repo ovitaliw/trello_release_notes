@@ -34,6 +34,10 @@ expected_summary = """- card headline 0
 - card headline 2
 - card headline 3"""
 
+expected_members_summary = """- card headline 0 ['fo', 'ob', 'ar']
+- card headline 1 
+- card headline 2 ['fo', 'ob', 'ar']
+- card headline 3 """
 
 @pytest.fixture
 def sample_cards():
@@ -49,31 +53,42 @@ def sample_cards():
         )
     return samples
 
+@pytest.fixture
+def sample_member_cards():
+    Card = namedtuple("Card", "name description url members_initials members_full_names members_usernames")
+    samples = []
+    for num in range(0, 4):
+        members_initials = ""
+        if num % 2 == 0:
+            members_initials  = ["fo", "ob", "ar"]
+        samples.append(
+            Card(
+                f"card headline {num}",
+                f"card description {num}",
+                f"http://example.com/{num}",
+                members_initials,
+                "",
+                "",
+            )
+        )
+    return samples
 
 # scope at module level to avoid extra get_board calls
 @pytest.fixture(scope="module")
 def trellist():
-    return Trellist(
+    trellist = Trellist(
         args.apikey, args.apisecret, args.boardname, args.done_list, args.releases
     )
-
+    return trellist
 
 def test_summarize_these_cards(trellist, sample_cards):
-    summary = trellist.summarize_these(sample_cards)
+    summary = trellist.summarize_these(sample_cards, template="- {card.name}", prep_function=lambda discard,x: x)
     assert expected_summary == summary
 
-def test_summarize_these_cards_with_members(trellist):
-    Card = namedtuple("Card", "name description url members")
-    Member = namedtuple("Member", "username full_name initials")
-    sample_member = Member(f"uname", "pepper salt", "ps")
-    sample_card = Card("card headline", "card description", "http://example.com", [sample_member])
-    # samples = [Card(f"card headline {num}", f"card description {num}", f"http://example.com/{num}",
-    #     Member(f"uname{num}", "pepper salt", "ps")) for num in range(0,4)]
-    # samples = [Card(f"card headline {num}", f"card description {num}", f"http://example.com/{num}", sample_member) for num in range(0,4)]
-    # summary = Trellist.summarize_these(samples, template="- {card.name} {' '.join(member.initials for member in card.members)}")
-    # assert expected_summary == summary
-    summary = trellist.summarize_this(sample_card, template="- {{card.name} [{card.members.initials}]")
-    assert summary == "- card headline ps"
+def test_summarize_these_cards_with_members(trellist, sample_member_cards):
+    summary = trellist.summarize_these(sample_member_cards, template="- {card.name} {card.members_initials}", prep_function=lambda discard, x: x)
+    assert expected_members_summary == summary
+
 
 def test_get_board(trellist):
     # let's connect and get a board
@@ -97,10 +112,11 @@ def test_get_done_cards(trellist):
     assert len(done_cards) == 4
 
 
-def test_create_release_card(trellist, sample_cards):
-    card = trellist.create_release_card(sample_cards, trellist.release_template)
-    assert card.description == expected_summary
-    expected_card_sample_count = "{}".format(len(sample_cards))
+def test_create_release_card(trellist, sample_member_cards):
+    trellist.prep_card = lambda discard, x: x
+    card = trellist.create_release_card(sample_member_cards, trellist.release_template, trellist.card_summary_template)
+    assert card.description == expected_members_summary
+    expected_card_sample_count = "{}".format(len(sample_member_cards))
     count_from_name = card.name.split(" ")[2]
     card.delete()
     assert count_from_name == expected_card_sample_count
