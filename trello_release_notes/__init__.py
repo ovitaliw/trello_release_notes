@@ -4,4 +4,4 @@
 
 __author__ = """Matt Katz"""
 __email__ = "github@morelightmorelight.com"
-__version__ = "__version__ = '0.3.0'"
+__version__ = "__version__ = '0.3.1'"
