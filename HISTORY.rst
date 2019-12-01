@@ -3,7 +3,7 @@ History
 =======
 
 v0.3.0 / 2019-12-01
-===================
+-------------------
 
   * Bump version: 0.2.5 → 0.3.0
   * Document and format
@@ -15,8 +15,8 @@ v0.3.0 / 2019-12-01
   * Remove prints from setup.py
 
 
-0.2.5 / 2019-11-08
-===================
+v0.2.5 / 2019-11-08
+-------------------
 
   * fix bug where archived cards weren't commented
   * Bump version: 0.2.4 → 0.2.5
@@ -31,20 +31,20 @@ v0.3.0 / 2019-12-01
 
 
 v0.2.4 / 2019-09-30
-===================
+-------------------
 
   * Bump version: 0.2.3 → 0.2.4
   * fixing twine complaint about headings
 
 
-0.2.0 / 2019-09-30
-===================
+v0.2.0 / 2019-09-30
+-------------------
 
-* First release to pypi
-* Docs on readthedocs
+  * First release to pypi
+  * Docs on readthedocs
 
 
-0.1.0 / 2019-05-31
-===================
+v0.1.0 / 2019-05-31
+-------------------
 
-* Development begun
+  * Development begun
