@@ -20,6 +20,10 @@ To get more advanced, explore the options listed in the help::
 
     trello-release --help
 
+If you have more than one Trello board, you may want to specify a board name on the commandline. Commandline parameters override anything in the `.trello_release_settings.ini` file.
+
+    trello-release --boardname OtherBoard --done-list Completed --releases Archive_of_Wins
+
 To use Trello Release Notes in a project::
 
     import trello_release_notes
