@@ -59,7 +59,9 @@ class Trellist(object):
         cards = self.get_done_cards()
         logger.info(f"got {len(cards)} cards")
         if cards or self.create_release_if_zero_done:
-            release_card = self.create_release_card(cards, self.release_template, self.card_summary_template)
+            release_card = self.create_release_card(
+                cards, self.release_template, self.card_summary_template
+            )
             for card in cards:
                 if self.create_comment_per_item:
                     self.add_comment_to_release(release_card, card)
@@ -127,6 +129,11 @@ class Trellist(object):
         return self.done.list_cards()
 
     def prep_card(self, card):
+        """Take the card and add arrays of all member initials, full_names and usernames for use in templates
+
+        :param card: a card to modify with extra information
+        """
+
         card.members = self.get_card_members(card)
         card.members_initials = ""
         card.members_full_names = ""
@@ -136,7 +143,6 @@ class Trellist(object):
             card.members_full_names = [member.full_name for member in card.members]
             card.members_usernames = [member.username for member in card.members]
         return card
-
 
     def summarize_these(self, cards, template, prep_function):
         """Run a list of cards through a template and return those joined by newlines
@@ -151,11 +157,19 @@ class Trellist(object):
         :param template: A template for each card. We pass the full card to format
         :param prep_function: A function that will add make the card more friendly to format
         """
-        summary = "\n".join([self.summarize_this(card, template, prep_function) for card in cards])
+        summary = "\n".join(
+            [self.summarize_this(card, template, prep_function) for card in cards]
+        )
         return summary
 
     def summarize_this(self, card, template, prep_function):
-        card = prep_function(self,card)
+        """Summarize a card by passing it to a template after prepping it with values from a prep_function
+
+        :param card: a Card to summarize
+        :param template: a string template. We'll call format and pass in a prepped Card
+        :param prep_function: use this to add extra information to the card 
+        """
+        card = prep_function(self, card)
         summary = template.format(card=card)
         return summary
 
@@ -163,11 +177,14 @@ class Trellist(object):
         """Returns a new release card, with a title from template and description based on a summary of the cards
 
         :param cards: Cards in this release
-        :param template: A format string that we pass in date and length of cards
+        :param release_template: A format string for release card name that we pass in date and length of cards
+        :param card_summary_template: A string we format with per each card
         """
         release_card_name = release_template.format(date=date.today(), count=len(cards))
         # turn list of names of cards into a summary
-        summary = self.summarize_these(cards, template=card_summary_template, prep_function = self.prep_card)
+        summary = self.summarize_these(
+            cards, template=card_summary_template, prep_function=self.prep_card
+        )
         logger.info(f"{summary}")
         release_card = self.releases.add_card(release_card_name, summary)
         return release_card
