@@ -135,6 +135,7 @@ class Trellist(object):
             card.members_initials = [member.initials for member in card.members]
             card.members_full_names = [member.full_name for member in card.members]
             card.members_usernames = [member.username for member in card.members]
+        return card
 
 
     def summarize_these(self, cards, template, prep_function):
