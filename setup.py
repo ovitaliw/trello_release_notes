@@ -27,8 +27,6 @@ EXTRAS_REQUIRE = {
 EXTRAS_REQUIRE["dev"] = (
     EXTRAS_REQUIRE["tests"] + EXTRAS_REQUIRE["docs"] + ["pre-commit"]
 )
-print("here is what's in EXTRAS")
-print(EXTRAS_REQUIRE)
 
 setup(
     author="Matt Katz",
