@@ -2,15 +2,12 @@
 # -*- coding: utf-8 -*-
 
 """Tests for `trello_release_notes` package that don't use the network.
-For testing when you're in the subway."""
+For testing when you're in the subway.
+pytest fixtures are defined in conftest.py
+"""
 
 import pytest
 
-
-from trello_release_notes.trello_release_notes import Trellist
-from trello_release_notes.__main__ import get_arg_parser
-from collections import namedtuple
-from pathlib import Path
 
 expected_summary = """- card headline 0
 - card headline 1

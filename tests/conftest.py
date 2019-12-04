@@ -78,3 +78,7 @@ def sample_cards():
         )
     return samples
 
+
+@pytest.fixture
+def conf():
+    return args
