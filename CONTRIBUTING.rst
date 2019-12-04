@@ -120,6 +120,7 @@ Ready to contribute? Here's how to set up `trello_release_notes` for local devel
     $ git push origin name-of-your-bugfix-or-feature
 
 7. Submit a pull request through the GitHub website.
+   We're using git-flow style workflow, so please target your pull request to the "develop" branch if you can.
 
 Pull Request Guidelines
 -----------------------
