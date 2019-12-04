@@ -39,6 +39,7 @@ expected_members_summary = """- card headline 0 ['fo', 'ob', 'ar']
 - card headline 2 ['fo', 'ob', 'ar']
 - card headline 3 """
 
+
 @pytest.fixture
 def sample_cards():
     Card = namedtuple("Card", "name description url")
@@ -53,14 +54,18 @@ def sample_cards():
         )
     return samples
 
+
 @pytest.fixture
 def sample_member_cards():
-    Card = namedtuple("Card", "name description url members_initials members_full_names members_usernames")
+    Card = namedtuple(
+        "Card",
+        "name description url members_initials members_full_names members_usernames",
+    )
     samples = []
     for num in range(0, 4):
         members_initials = ""
         if num % 2 == 0:
-            members_initials  = ["fo", "ob", "ar"]
+            members_initials = ["fo", "ob", "ar"]
         samples.append(
             Card(
                 f"card headline {num}",
@@ -73,6 +78,7 @@ def sample_member_cards():
         )
     return samples
 
+
 # scope at module level to avoid extra get_board calls
 @pytest.fixture(scope="module")
 def trellist():
@@ -81,12 +87,20 @@ def trellist():
     )
     return trellist
 
+
 def test_summarize_these_cards(trellist, sample_cards):
-    summary = trellist.summarize_these(sample_cards, template="- {card.name}", prep_function=lambda discard,x: x)
+    summary = trellist.summarize_these(
+        sample_cards, template="- {card.name}", prep_function=lambda discard, x: x
+    )
     assert expected_summary == summary
 
+
 def test_summarize_these_cards_with_members(trellist, sample_member_cards):
-    summary = trellist.summarize_these(sample_member_cards, template="- {card.name} {card.members_initials}", prep_function=lambda discard, x: x)
+    summary = trellist.summarize_these(
+        sample_member_cards,
+        template="- {card.name} {card.members_initials}",
+        prep_function=lambda discard, x: x,
+    )
     assert expected_members_summary == summary
 
 
@@ -114,7 +128,9 @@ def test_get_done_cards(trellist):
 
 def test_create_release_card(trellist, sample_member_cards):
     trellist.prep_card = lambda discard, x: x
-    card = trellist.create_release_card(sample_member_cards, trellist.release_template, trellist.card_summary_template)
+    card = trellist.create_release_card(
+        sample_member_cards, trellist.release_template, trellist.card_summary_template
+    )
     assert card.description == expected_members_summary
     expected_card_sample_count = "{}".format(len(sample_member_cards))
     count_from_name = card.name.split(" ")[2]
