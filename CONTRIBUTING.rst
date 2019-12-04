@@ -12,6 +12,8 @@ You can contribute in many ways:
 Types of Contributions
 ----------------------
 
+.. contents :: :local:
+
 Report Bugs
 ~~~~~~~~~~~
 
@@ -23,17 +25,13 @@ If you are reporting a bug, please include:
 * Any details about your local setup that might be helpful in troubleshooting.
 * Detailed steps to reproduce the bug.
 
-Fix Bugs
-~~~~~~~~
+Fix Bugs or Implement Features
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Look through the GitHub issues for bugs. Anything tagged with "bug" and "help
+Look through the GitHub issues for bugs or features. Anything tagged with "bug" and "help
 wanted" is open to whoever wants to implement it.
 
-Implement Features
-~~~~~~~~~~~~~~~~~~
-
-Look through the GitHub issues for features. Anything tagged with "enhancement"
-and "help wanted" is open to whoever wants to implement it.
+And if you are going to code on this project, look down to :ref:`get-started-coding` for advice on how to do that.
 
 Write Documentation
 ~~~~~~~~~~~~~~~~~~~
@@ -77,6 +75,8 @@ If you are proposing a feature:
 * Keep the scope as narrow as possible, to make it easier to implement.
 * Remember that this is a volunteer-driven project, and that contributions
   are welcome :)
+
+.. _get-started-coding:
 
 Get Started!
 ------------
