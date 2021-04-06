@@ -169,7 +169,7 @@ class Trellist(object):
         :param template: a string template. We'll call format and pass in a prepped Card
         :param prep_function: use this to add extra information to the card 
         """
-        card = prep_function(self, card)
+        card = prep_function(card)
         summary = template.format(card=card)
         return summary
 
